@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>D1 留言板</title>
+    <link rel="stylesheet" href="/app.css">
+  </head>
+  <body>
+    <main>
+      <h1>D1 留言板</h1>
+      <p>留言寫在本機的 D1。重新啟動開發伺服器後應該還在。</p>
+      <form id="composer">
+        <label>作者 <input name="author" maxlength="20" required></label>
+        <label>內容 <textarea name="body" maxlength="500" required></textarea></label>
+        <button type="submit">送出</button>
+      </form>
+      <p id="status" role="status"></p>
+      <ul id="list"></ul>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

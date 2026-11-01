@@ -1,0 +1,15 @@
+header.site-header
+  a.brand(href="/")
+    span.brand__mark(aria-hidden="true")
+    span.brand__text
+      span.brand__name 後端闖關
+      span.brand__sub 一個月的 Worker 與資料庫
+  div.progress-widget
+    p.progress-widget__label
+      span(data-progress-label) 已完成 0 / 20 課
+      span.badge-graduate(data-graduate-badge hidden) 結業
+    div.progress-track(role="progressbar" aria-valuemin="0" aria-valuemax=lessonCount aria-valuenow="0" aria-label="課程完成度" data-progress-bar)
+      span.progress-track__fill(data-progress-fill)
+  div.header-actions
+    button.button.button--ghost(type="button" data-theme-toggle) 切換外觀
+    button.button.button--ghost(type="button" data-reset) 重設進度

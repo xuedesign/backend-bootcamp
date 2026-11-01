@@ -1,0 +1,77 @@
+{
+  "week": 3,
+  "title": "第 3 週通關測驗",
+  "intro": "題目圍繞資料表、SQL、D1 遷移，以及為什麼不能把客人的字拼進 SQL。答對 8 題打開第 4 週。",
+  "questions": [
+    {
+      "id": "w3q1",
+      "prompt": "主鍵的工作是？",
+      "choices": ["讓每一列有獨一無二的身分", "把頁面變成深色", "取代 HTTP 方法", "存放明文密碼"],
+      "answer": 0,
+      "explain": "主鍵用來精準指到一列。名字可以重複，主鍵不行。"
+    },
+    {
+      "id": "w3q2",
+      "prompt": "作者名字適合作為留言表的主鍵嗎？",
+      "choices": ["適合，因為比較好記", "不適合，因為會重名，也可能改名", "適合，因為 JSON 規定", "只有在 GET 時適合"],
+      "answer": 1,
+      "explain": "主鍵要穩定且唯一。人的顯示名字兩者都不保證。"
+    },
+    {
+      "id": "w3q3",
+      "prompt": "SQL 的四個動詞，對應新增的是？",
+      "choices": ["SELECT", "INSERT", "UPDATE", "DELETE"],
+      "answer": 1,
+      "explain": "INSERT 新增，SELECT 讀取，UPDATE 更新，DELETE 刪除。"
+    },
+    {
+      "id": "w3q4",
+      "prompt": "哪一句最危險？",
+      "choices": ["DELETE FROM messages WHERE id = 1", "SELECT id FROM messages", "DELETE FROM messages", "INSERT INTO messages (author, body) VALUES ('Ada', '哈囉')"],
+      "answer": 2,
+      "explain": "沒有 WHERE 的刪除會作用在整張表。"
+    },
+    {
+      "id": "w3q5",
+      "prompt": "migration 檔已經套用之後，格式還要改，應該？",
+      "choices": ["直接改舊檔再祈禱它重跑", "新增下一份遷移檔", "把 SQL 貼進前端", "刪掉 compatibility_date"],
+      "answer": 1,
+      "explain": "已套用的檔是版本紀錄，不會自動重跑。新的改變寫成新檔。"
+    },
+    {
+      "id": "w3q6",
+      "prompt": "wrangler d1 migrations apply 加上 --local 是為了？",
+      "choices": ["把遷移套到本機模擬資料庫", "立刻公開到整個網際網路", "把秘密寫進 Git", "關閉 SQL"],
+      "answer": 0,
+      "explain": "學習時先動本機那本帳。線上要另外用 --remote，而且要確認對象。"
+    },
+    {
+      "id": "w3q7",
+      "prompt": "程式裡哪個寫法才是 prepared statement？",
+      "choices": ["把作者拼進 SQL 字串", "prepare(\"... author = ?\").bind(author)", "exec(客人傳來的整段 SQL)", "用雙引號把值接在句子後面"],
+      "answer": 1,
+      "explain": "問號是空格，bind 把值分開送，資料庫不會把它當成 SQL 指令。"
+    },
+    {
+      "id": "w3q8",
+      "prompt": "想一次拿回很多列留言，應該用？",
+      "choices": ["all()", "first() 而且假設一定有列", "不 await 的 prepare", "Response.redirect"],
+      "answer": 0,
+      "explain": "all() 的 results 是列的陣列。first() 用於零或一列。"
+    },
+    {
+      "id": "w3q9",
+      "prompt": "對客人回應 500 時，為什麼不回傳 SQL 錯誤原文？",
+      "choices": ["因為 JSON 不能放中文", "因為內部細節可能露出表的結構", "因為 500 不能有本文", "因為 D1 禁止 catch"],
+      "answer": 1,
+      "explain": "客人需要的是通用句子。細節寫進你自己的紀錄即可。"
+    },
+    {
+      "id": "w3q10",
+      "prompt": "重啟 wrangler dev 後留言還在，代表什麼？",
+      "choices": ["資料寫進 D1，而不是只活在那個陣列", "CORS 幫你保存了", "瀏覽器禁止重新整理", "主鍵消失了"],
+      "answer": 0,
+      "explain": "第 3 週的完成標準就是帳本還在。記憶體陣列做不到這一點。"
+    }
+  ]
+}

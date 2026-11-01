@@ -1,0 +1,77 @@
+{
+  "week": 2,
+  "title": "第 2 週通關測驗",
+  "intro": "這一週的主題是 API 的形狀、驗證、瀏覽器的 fetch，以及秘密不要進 Git。答對 8 題打開第 3 週。",
+  "questions": [
+    {
+      "id": "w2q1",
+      "prompt": "哪一個路徑比較符合本課的 REST 習慣？",
+      "choices": ["POST /api/createNewMessage", "GET /api/deleteMessage?id=3", "DELETE /api/messages/3", "POST /api/doAction"],
+      "answer": 2,
+      "explain": "路徑用名詞表示資源，方法用 DELETE 表示刪除。"
+    },
+    {
+      "id": "w2q2",
+      "prompt": "新增留言成功，本課建議的狀態碼是？",
+      "choices": ["201", "404", "500", "304"],
+      "answer": 0,
+      "explain": "201 表示已建立。404 是找不到，500 是伺服器錯誤。"
+    },
+    {
+      "id": "w2q3",
+      "prompt": "為什麼後端仍要驗證，即使表單有 required？",
+      "choices": ["因為 CSS 不會送出", "因為客人可以繞過網頁，直接呼叫 API", "因為 GET 不能讀 JSON", "因為 D1 不接受文字"],
+      "answer": 1,
+      "explain": "curl 或其他程式不會經過你的畫面。進入 API 的值都不可信。"
+    },
+    {
+      "id": "w2q4",
+      "prompt": "本文不是 JSON 時，應該回？",
+      "choices": ["200 與空陣列", "400", "201", "302"],
+      "answer": 1,
+      "explain": "請求本身看不懂，用 400，並給一句人話。"
+    },
+    {
+      "id": "w2q5",
+      "prompt": "模組外層的陣列為什麼不能當正式留言儲存？",
+      "choices": ["JavaScript 不能使用陣列", "重啟或不同執行環境不會共享同一塊白板", "CORS 會清掉陣列", "JSON 不能表示陣列"],
+      "answer": 1,
+      "explain": "那塊陣列只活在該次執行環境。它不是持久、也不是全域唯一的帳本。"
+    },
+    {
+      "id": "w2q6",
+      "prompt": "curl 成功但瀏覽器的 fetch 失敗，最可能是？",
+      "choices": ["SQL 語法錯誤", "瀏覽器的跨來源規則擋住了，回應缺少允許的來源標頭", "狀態碼 200 代表失敗", "npm 沒有安裝"],
+      "answer": 1,
+      "explain": "CORS 是瀏覽器的保護。終端機的 curl 不套用這道鎖。"
+    },
+    {
+      "id": "w2q7",
+      "prompt": "帶 JSON 的跨來源 POST，瀏覽器可能先送出？",
+      "choices": ["OPTIONS 預檢", "DELETE 預檢", "一份 SQL migration", "PUT 到 KV"],
+      "answer": 0,
+      "explain": "預檢是 OPTIONS。你要回 204 並說明允許的方法與標頭。"
+    },
+    {
+      "id": "w2q8",
+      "prompt": "允許的網頁來源適合放在哪裡？",
+      "choices": ["wrangler 的 vars", "Git 裡的密碼檔", "回應給所有客人的秘密欄位", "前端原始碼裡的金鑰"],
+      "answer": 0,
+      "explain": "來源網址不是機密，可以放 vars。金鑰與胡椒要走 secret。"
+    },
+    {
+      "id": "w2q9",
+      "prompt": "本機的 .dev.vars 應該？",
+      "choices": ["提交到 Git 方便同事複製真密碼", "列入忽略清單，另外提供只有假字的範例檔", "貼到前端 JavaScript", "寫進 migration"],
+      "answer": 1,
+      "explain": "真的秘密不進版本庫。範例檔只示範需要哪些名字。"
+    },
+    {
+      "id": "w2q10",
+      "prompt": "run_worker_first 表示？",
+      "choices": ["資料庫先於程式建立", "請求先進入 Worker，再決定要不要把靜態檔交出去", "瀏覽器略過 CORS", "秘密會自動提交"],
+      "answer": 1,
+      "explain": "有這個設定時，程式先看路徑。API 自己回，其他再交給 ASSETS。"
+    }
+  ]
+}

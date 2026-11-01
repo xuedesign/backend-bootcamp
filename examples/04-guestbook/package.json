@@ -1,0 +1,13 @@
+{
+  "name": "guestbook",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "db:apply": "wrangler d1 migrations apply guestbook-db --local",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.45.0"
+  }
+}

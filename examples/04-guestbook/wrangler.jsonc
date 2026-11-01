@@ -1,0 +1,41 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "guestbook",
+  "main": "src/index.js",
+  "compatibility_date": "2026-10-30",
+  "observability": {
+    "enabled": true,
+    "traces": {
+      "enabled": true
+    }
+  },
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "vars": {},
+  "secrets": {
+    "required": ["PEPPER"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "guestbook-db",
+      "database_id": "00000000-0000-0000-0000-000000000002",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "SESSIONS",
+      "id": "00000000000000000000000000000002"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "BACKUPS",
+      "bucket_name": "guestbook-backups"
+    }
+  ]
+}

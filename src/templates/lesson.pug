@@ -1,0 +1,56 @@
+extends layout.pug
+
+block main
+  article.lesson(data-week=lesson.week data-lesson=lesson.id)
+    header.lesson-hero
+      p.kicker 第 #{lesson.week} 週 · #{week.title}
+      h1= lesson.title
+      p.lesson-meta
+        span= lesson.dateLabel
+        span 大約 #{lesson.minutes} 分鐘
+        span 動手做約 #{lesson.exerciseMinutes} 分鐘
+      p.lede= lesson.summary
+
+    div.gate
+      h2 這一關還沒打開
+      p
+        if lesson.week === 1
+          | 第 1 週應該是開著的。如果看到這段話，請重新整理；進度若壞掉，可以用右上角的「重設進度」。
+        else
+          | 先通過第 #{lesson.week - 1} 週的通關測驗（答對 80%），這份講義才會出現在畫面上。
+      p
+        a.button.button--primary(href="/") 回到關卡地圖
+        if lesson.week > 1
+          a.button(href=`/quizzes/week-${lesson.week - 1}.html`) 前往第 #{lesson.week - 1} 週測驗
+
+    div.stage
+      p.pending 正在打開這一關…
+
+    template#handout
+      .handout
+        label.complete
+          input(type="checkbox" data-complete=lesson.id)
+          span 我讀完這課了
+        section.goals(aria-labelledby="goals-title")
+          h2#goals-title 學習目標
+          ul
+            each goal in lesson.goals
+              li= goal
+        .handout-layout
+          .prose!= lesson.handoutHtml
+          nav.toc(aria-label="本課大綱")
+            p.toc__title 本課大綱
+            ol
+              each item in lesson.toc
+                li
+                  a(href=`#${item.id}`)= item.text
+        label.complete
+          input(type="checkbox" data-complete=lesson.id)
+          span 我讀完這課了
+        nav.pager(aria-label="前後課程")
+          a(href=prevHref)
+            span 上一關
+            strong= prevLabel
+          a(href=nextHref)
+            span 下一關
+            strong= nextLabel
