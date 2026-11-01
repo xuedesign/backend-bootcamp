@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>記憶體留言板</title>
+    <link rel="stylesheet" href="/app.css">
+  </head>
+  <body>
+    <main>
+      <h1>記憶體留言板</h1>
+      <p>這是原型。關掉開發伺服器再打開，留言會消失。</p>
+      <form id="composer">
+        <label>作者 <input name="author" maxlength="20" required></label>
+        <label>內容 <textarea name="body" maxlength="500" required></textarea></label>
+        <button type="submit">送出</button>
+      </form>
+      <p id="status" role="status"></p>
+      <ul id="list"></ul>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

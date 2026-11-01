@@ -1,0 +1,21 @@
+doctype html
+html(lang="zh-Hant" class="week-open-1")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="description" content="給前端與設計師的一個月後端闖關：HTTP、Cloudflare Workers、D1，最後做出可佈署的留言板。")
+    meta(name="theme-color" content="#0f6e6b")
+    title= title
+    link(rel="icon" href="/favicon.svg" type="image/svg+xml")
+    link(rel="stylesheet" href="/src/styles/main.scss")
+    include partials/boot.pug
+  body(data-lesson-count=lessonCount)
+    a.skip(href="#main") 跳到內容
+    include partials/header.pug
+    main#main
+      block main
+    include partials/footer.pug
+    script(type="application/json" id="curriculum")!= curriculumJson
+    script(type="module" src="/src/scripts/main.js")
+    noscript
+      p.noscript-note 這個闖關網站要用 JavaScript 記住你的進度，並在解鎖後顯示講義。請在瀏覽器開啟 JavaScript。

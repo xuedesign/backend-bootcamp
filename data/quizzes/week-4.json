@@ -1,0 +1,77 @@
+{
+  "week": 4,
+  "title": "第 4 週通關測驗",
+  "intro": "最後十題涵蓋關聯、登入、紀錄、KV、R2 與佈署。答對 8 題取得結業徽章，並打開複習模式。",
+  "questions": [
+    {
+      "id": "w4q1",
+      "prompt": "留言表要指向使用者時，應該保存？",
+      "choices": ["user_id", "使用者的明文密碼", "整份通訊錄複本", "cookie 字串"],
+      "answer": 0,
+      "explain": "留言記使用者的主鍵。名字從使用者表 JOIN 出來，避免兩份真相。"
+    },
+    {
+      "id": "w4q2",
+      "prompt": "JOIN users ON users.id = messages.user_id 在做什麼？",
+      "choices": ["用編號把兩張表對齊", "刪掉所有使用者", "把密碼變成 JSON", "建立 CORS 標頭"],
+      "answer": 0,
+      "explain": "條件必須是「留言上記的人」對「使用者的主鍵」，不是兩張表各自的 id 互比。"
+    },
+    {
+      "id": "w4q3",
+      "prompt": "索引的代價是？",
+      "choices": ["完全沒有代價", "多占空間，寫入時也要多維護這份目錄", "會關閉主鍵", "會把 SQL injection 打開"],
+      "answer": 1,
+      "explain": "索引加速查找與排序，但不是免費的。加在你真的會用到的欄位。"
+    },
+    {
+      "id": "w4q4",
+      "prompt": "密碼在資料庫裡應該是？",
+      "choices": ["明文，方便客服查看", "慢速雜湊後的結果，搭配鹽", "放在網址上的 GET", "寫進前端的變數後提交到 Git"],
+      "answer": 1,
+      "explain": "不能還原的雜湊，加上每人不同的鹽。胡椒再放在 secret。"
+    },
+    {
+      "id": "w4q5",
+      "prompt": "HttpOnly cookie 主要擋住誰？",
+      "choices": ["網頁裡的 JavaScript 讀取這份 cookie", "所有的 HTTPS", "D1 的 SELECT", "終端機的 cd"],
+      "answer": 0,
+      "explain": "HttpOnly 讓腳本讀不到手環。它不是加密本身，也不是資料庫權限。"
+    },
+    {
+      "id": "w4q6",
+      "prompt": "本機 http://localhost 登入時，Secure cookie 可能造成？",
+      "choices": ["瀏覽器不保存，看起來像登入失敗", "SQL 自動通過", "KV 變成 R2", "狀態碼變成 201"],
+      "answer": 0,
+      "explain": "Secure 只在 HTTPS 送出。本機先不要加，線上 https 再加。"
+    },
+    {
+      "id": "w4q7",
+      "prompt": "functions/api/hello.js 這個 Pages Function 對應？",
+      "choices": ["/api/hello", "/functions/api/hello.js", "/wrangler.jsonc", "/migrations/0001"],
+      "answer": 0,
+      "explain": "functions/api/hello.js 會變成網址 /api/hello，不是把檔名原樣顯示在網址上。"
+    },
+    {
+      "id": "w4q8",
+      "prompt": "哪一種紀錄比較恰當？",
+      "choices": ["把密碼與完整 cookie 印出來", "對客人回通用句子，對自己記路徑與錯誤訊息", "把堆疊原樣回傳給瀏覽器", "什麼都不記"],
+      "answer": 1,
+      "explain": "客人不需要內部細節。你自己需要知道哪一扇門失敗，但不要記秘密。"
+    },
+    {
+      "id": "w4q9",
+      "prompt": "登入手環比較適合放在？",
+      "choices": ["KV，用權杖當鍵，並設定過期", "每一則留言的 body", "Git 倉庫", "CSS 檔"],
+      "answer": 0,
+      "explain": "KV 適合用鍵找出一份小資料。過期後 get 得到 null，就當成未登入。"
+    },
+    {
+      "id": "w4q10",
+      "prompt": "佈署留言板之前，哪一件事一定要做？",
+      "choices": ["把 .dev.vars 提交上去", "對線上 D1 套用遷移，並用 secret 設定胡椒", "把練習用的全零 database_id 留著", "關閉所有錯誤處理"],
+      "answer": 1,
+      "explain": "程式上線不代表表與秘密也在。遷移用 --remote，胡椒用 secret put，不要把值寫進 Git。"
+    }
+  ]
+}

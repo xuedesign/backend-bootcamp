@@ -1,0 +1,77 @@
+{
+  "week": 1,
+  "title": "第 1 週通關測驗",
+  "intro": "十題都是這一週的觀念。答對 8 題（80%）就打開第 2 週。交卷後才看得到解析。",
+  "questions": [
+    {
+      "id": "w1q1",
+      "prompt": "在這門課的比喻裡，後端比較像什麼？",
+      "choices": ["菜單的視覺設計", "廚房：收下點餐並決定端出什麼", "瀏覽器的重新整理按鈕", "CSS 的顏色"],
+      "answer": 1,
+      "explain": "前端是客人看得到的畫面。後端收下請求，決定回應的內容。"
+    },
+    {
+      "id": "w1q2",
+      "prompt": "一筆 HTTP 請求通常不會缺少哪一組？",
+      "choices": ["方法與網址", "資料庫主鍵", "密碼雜湊", "SQL 遷移檔"],
+      "answer": 0,
+      "explain": "請求至少要有方法（例如 GET）和網址。主鍵與雜湊是後面的課題。"
+    },
+    {
+      "id": "w1q3",
+      "prompt": "狀態碼 404 比較接近哪一句？",
+      "choices": ["順利，這是你要的內容", "這裡沒有你要的東西", "廚房自己出錯", "已建立新的一筆"],
+      "answer": 1,
+      "explain": "404 表示找不到。500 才是伺服器出錯，201 是已建立。"
+    },
+    {
+      "id": "w1q4",
+      "prompt": "看留言清單、不修改資料，應該優先用哪個方法？",
+      "choices": ["POST", "DELETE", "GET", "PUT"],
+      "answer": 2,
+      "explain": "GET 用來讀取。新增才用 POST，刪除用 DELETE。"
+    },
+    {
+      "id": "w1q5",
+      "prompt": "哪一個是合法的 JSON？",
+      "choices": ["{ author: \"Ada\" }", "{ \"author\": \"Ada\" }", "author = Ada", "<author>Ada</author>"],
+      "answer": 1,
+      "explain": "JSON 的鍵必須是雙引號字串，不能用沒有引號的 JavaScript 寫法。"
+    },
+    {
+      "id": "w1q6",
+      "prompt": "package.json 的角色比較像？",
+      "choices": ["工具的購物清單", "已經展開的 node_modules 本體", "瀏覽器的畫面", "SQL 的一列資料"],
+      "answer": 0,
+      "explain": "清單可以交給別人重裝。node_modules 是裝好的工具，不該當成唯一副本傳來傳去。"
+    },
+    {
+      "id": "w1q7",
+      "prompt": "新的 Worker 應使用哪一種進入點？",
+      "choices": ["addEventListener(\"fetch\", ...)", "export default { fetch }", "只要一個 alert()", "onClick 在按鈕上"],
+      "answer": 1,
+      "explain": "現代 Workers 用 ES Module 的預設匯出。addEventListener 的 Service Worker 寫法已不建議用於新程式。"
+    },
+    {
+      "id": "w1q8",
+      "prompt": "wrangler.jsonc 的 compatibility_date 是在做什麼？",
+      "choices": ["設定資料庫密碼", "指定要採用哪一天的平台行為", "把網站做成深色", "自動通過測驗"],
+      "answer": 1,
+      "explain": "相容日期讓平台依那一天的規矩執行，避免行為悄悄改變。"
+    },
+    {
+      "id": "w1q9",
+      "prompt": "未知路徑應該怎麼回應比較清楚？",
+      "choices": ["仍回 200 與空字串", "回 404", "讓程式拋出例外給客人看", "回 201"],
+      "answer": 1,
+      "explain": "找不到櫃台就回 404。201 是建立成功，不適合用在未知路徑。"
+    },
+    {
+      "id": "w1q10",
+      "prompt": "/api/time 與 /api/hello 分成兩個路徑，主要是為了？",
+      "choices": ["讓不同櫃台回不同資源", "讓 JSON 變成 HTML", "避免使用 HTTPS", "取代 DevTools"],
+      "answer": 0,
+      "explain": "路由就是依路徑（與方法）決定哪一段程式回答。"
+    }
+  ]
+}

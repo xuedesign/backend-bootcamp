@@ -1,0 +1,36 @@
+extends layout.pug
+
+block main
+  article.quiz(data-week=quiz.week data-quiz=quiz.week)
+    header.lesson-hero
+      p.kicker 第 #{quiz.week} 週 · #{week.title}
+      h1= quiz.title
+      p.lede= quiz.intro
+      p.lesson-meta
+        span 共 #{quiz.questions.length} 題
+        span 答對 80% 通過
+        if quiz.week < 4
+          span 通過後解鎖第 #{quiz.week + 1} 週
+        else
+          span 通過後取得結業徽章
+
+    div.gate
+      h2 測驗還沒打開
+      p 先通過第 #{quiz.week - 1} 週的通關測驗，才能挑戰這一關。題目不會先顯示。
+      p
+        a.button.button--primary(href="/") 回到關卡地圖
+        if quiz.week > 1
+          a.button(href=`/quizzes/week-${quiz.week - 1}.html`) 前往上一週測驗
+
+    div.stage
+      p.pending 正在準備題目…
+
+    template#quiz-source
+      script(type="application/json")!= quizJson
+
+    p.quiz-next(hidden data-quiz-next)
+      if nextWeek
+        a.button.button--primary(href=`/lessons/w${nextWeek.id}-01.html`) 開始第 #{nextWeek.id} 週
+      else
+        a.button.button--primary(href="/") 回地圖看結業徽章
+      a.button(href="/") 回到關卡地圖

@@ -1,0 +1,39 @@
+extends layout.pug
+
+block main
+  section.hero
+    p.eyebrow 2026 / 11 / 02 – 11 / 27 · 平日 20 關
+    h1 先會做網頁，也能學會後端。
+    p.lede 這是給前端與設計師的一個月練習。你已經會 HTML、CSS、JavaScript。這裡不假設你寫過伺服器、資料庫或 SQL。每天 30 到 60 分鐘，最後做出一個可以佈署的留言板。
+    div.hero__actions
+      a.button.button--primary(href="/lessons/w1-01.html") 從第 1 關開始
+      button.button(type="button" data-review-toggle aria-pressed="false" disabled) 複習模式
+    p.hero__hint(data-review-hint) 四週測驗都通過以後，就可以開啟複習模式，隨時重看每一課。
+
+  ol.map
+    each week in weeks
+      li.week-card(data-week=week.id)
+        div.week-card__head
+          p.week-card__index(aria-hidden="true")= week.id
+          div
+            h2= `第 ${week.id} 週　${week.title}`
+            p= week.blurb
+          p.week-card__lock(data-lock-label)
+            span.lock-icon(aria-hidden="true")
+            span.lock-copy
+              if week.id === 1
+                | 一開始就開放
+              else
+                | 通過第 #{week.id - 1} 週測驗後解鎖
+            span.open-copy 已解鎖
+        ol.lesson-path
+          each lesson in week.lessons
+            li
+              a.lesson-node(href=`/lessons/${lesson.id}.html` data-lesson-link=lesson.id)
+                span.lesson-node__date= lesson.dateLabel
+                span.lesson-node__title= lesson.title
+                span.lesson-node__meta= `${lesson.minutes} 分鐘`
+                span.lesson-node__done(aria-hidden="true") 完成
+        a.quiz-link(href=`/quizzes/week-${week.id}.html`)
+          span= week.quizTitle
+          span.quiz-link__rule 答對 80% 通過

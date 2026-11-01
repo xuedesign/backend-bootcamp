@@ -1,0 +1,34 @@
+//- 在畫面畫出來之前套上外觀與關卡狀態，避免上鎖內容閃一下。
+//- 解鎖規則要與 src/scripts/progress-core.js 一致。
+script.
+  (function () {
+    var PROGRESS_KEY = "backend-bootcamp-progress-v1";
+    var THEME_KEY = "backend-bootcamp-theme";
+    var root = document.documentElement;
+    try {
+      var theme = localStorage.getItem(THEME_KEY);
+      if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+    } catch (error) {}
+    var passed = [];
+    var review = false;
+    var graduated = false;
+    try {
+      var raw = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "null");
+      if (raw && Array.isArray(raw.passedQuizzes)) {
+        passed = raw.passedQuizzes.map(Number).filter(function (week) {
+          return week >= 1 && week <= 4;
+        });
+      }
+      graduated = [1, 2, 3, 4].every(function (week) { return passed.indexOf(week) !== -1; });
+      review = graduated && !!(raw && raw.reviewMode);
+    } catch (error) {}
+    root.classList.add("week-open-1");
+    if (review) {
+      root.classList.add("week-open-2", "week-open-3", "week-open-4", "review-mode");
+    } else {
+      if (passed.indexOf(1) !== -1) root.classList.add("week-open-2");
+      if (passed.indexOf(2) !== -1) root.classList.add("week-open-3");
+      if (passed.indexOf(3) !== -1) root.classList.add("week-open-4");
+    }
+    if (graduated) root.classList.add("is-graduated");
+  })();

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>留言板</title>
+    <link rel="stylesheet" href="/app.css">
+  </head>
+  <body>
+    <main>
+      <h1>留言板</h1>
+      <p id="me" role="status">尚未登入</p>
+      <form id="auth">
+        <label>帳號 <input name="username" autocomplete="username" required></label>
+        <label>密碼 <input name="password" type="password" autocomplete="current-password" required></label>
+        <div class="row">
+          <button id="register" type="button">註冊</button>
+          <button id="login" type="button">登入</button>
+          <button id="logout" type="button">登出</button>
+          <button id="backup" type="button">匯出備份</button>
+        </div>
+      </form>
+      <form id="composer">
+        <label>留言 <textarea name="body" maxlength="500" required></textarea></label>
+        <button type="submit">送出</button>
+      </form>
+      <p id="status" role="status"></p>
+      <ul id="list"></ul>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

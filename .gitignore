@@ -1,0 +1,19 @@
+node_modules/
+dist/
+.vite/
+*.log
+
+# 由 Pug / Markdown 產生的頁面，請改 data/ 與 src/templates/
+/index.html
+/lessons/
+/quizzes/
+
+# 範例 Worker 的本機產物與秘密
+examples/**/node_modules/
+examples/**/.wrangler/
+examples/**/.dev.vars
+.dev.vars
+.env
+.env.*
+!.env.example
+!.dev.vars.example
