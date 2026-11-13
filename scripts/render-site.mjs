@@ -210,6 +210,44 @@ function asDateString(value) {
   return String(value);
 }
 
+function pagerFor(lesson, renderedLessons) {
+  const prevHref = lesson.prev ? `/lessons/${lesson.prev.id}.html` : "/";
+  const prevLabel = lesson.prev ? lesson.prev.title : "回到地圖";
+  if (lesson.id === "w4-05") {
+    const bonus = renderedLessons.find((item) => item.id === "bonus-01");
+    if (bonus) {
+      return {
+        prevHref,
+        prevLabel,
+        nextHref: `/lessons/${bonus.id}.html`,
+        nextLabel: bonus.title,
+      };
+    }
+  }
+  if (lesson.id === "bonus-01") {
+    return {
+      prevHref,
+      prevLabel,
+      nextHref: "/quizzes/week-4.html",
+      nextLabel: "第 4 週通關測驗",
+    };
+  }
+  if (lesson.next && lesson.next.week === lesson.week) {
+    return {
+      prevHref,
+      prevLabel,
+      nextHref: `/lessons/${lesson.next.id}.html`,
+      nextLabel: lesson.next.title,
+    };
+  }
+  return {
+    prevHref,
+    prevLabel,
+    nextHref: `/quizzes/week-${lesson.week}.html`,
+    nextLabel: "前往通關測驗",
+  };
+}
+
 function dateLabel(lesson) {
   const [, month, day] = lesson.date.split("-");
   return `${Number(month)}/${Number(day)}（${lesson.weekday}）`;
@@ -271,7 +309,8 @@ export async function renderSite() {
   const home = compile("home.pug")({
     ...shared,
     title: "後端闖關：一個月學會 Worker 與資料庫",
-    weeks: weekCards,
+    weeks: weekCards.filter((week) => !week.bonus),
+    bonusWeeks: weekCards.filter((week) => week.bonus),
   });
   await writeIfChanged(path.join(root, "index.html"), home);
 
@@ -281,19 +320,16 @@ export async function renderSite() {
 
   for (const lesson of renderedLessons) {
     const week = weeks.find((item) => item.id === lesson.week);
+    const pager = pagerFor(lesson, renderedLessons);
     const html = lessonTemplate({
       ...shared,
       title: `${lesson.title} · 後端闖關`,
       lesson,
       week,
-      prevHref: lesson.prev ? `/lessons/${lesson.prev.id}.html` : "/",
-      prevLabel: lesson.prev ? lesson.prev.title : "回到地圖",
-      nextHref: lesson.next && lesson.next.week === lesson.week
-        ? `/lessons/${lesson.next.id}.html`
-        : `/quizzes/week-${lesson.week}.html`,
-      nextLabel: lesson.next && lesson.next.week === lesson.week
-        ? lesson.next.title
-        : "前往通關測驗",
+      prevHref: pager.prevHref,
+      prevLabel: pager.prevLabel,
+      nextHref: pager.nextHref,
+      nextLabel: pager.nextLabel,
     });
     const file = path.join(root, "lessons", `${lesson.id}.html`);
     await writeIfChanged(file, html);
@@ -310,6 +346,7 @@ export async function renderSite() {
       week,
       quizJson: JSON.stringify(quiz).replaceAll("<", "\\u003c"),
       nextWeek: quiz.week < 4 ? weeks.find((item) => item.id === quiz.week + 1) : null,
+      bonusHref: quiz.week === 4 ? "/lessons/bonus-01.html" : null,
     });
     const file = path.join(root, "quizzes", `week-${quiz.week}.html`);
     await writeIfChanged(file, html);

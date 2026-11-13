@@ -37,8 +37,11 @@ function handleQuizResult(result) {
   if (result.week === 4) {
     showCelebration({
       title: "結業徽章到手",
-      message: "四週都通過了。複習模式已打開，你可以隨時重看每一課。",
-      actions: [{ href: "/", label: "回地圖看徽章" }],
+      message: "四週都通過了。複習模式已打開，加碼關卡也可以讀了。",
+      actions: [
+        { href: "/lessons/bonus-01.html", label: "前往加碼關卡" },
+        { href: "/", label: "回地圖看徽章" },
+      ],
     });
     return;
   }

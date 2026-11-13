@@ -12,6 +12,7 @@ script.
     var passed = [];
     var review = false;
     var graduated = false;
+    var lesson20Done = false;
     try {
       var raw = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "null");
       if (raw && Array.isArray(raw.passedQuizzes)) {
@@ -19,16 +20,21 @@ script.
           return week >= 1 && week <= 4;
         });
       }
+      if (raw && Array.isArray(raw.completedLessons)) {
+        lesson20Done = raw.completedLessons.indexOf("w4-05") !== -1;
+      }
       graduated = [1, 2, 3, 4].every(function (week) { return passed.indexOf(week) !== -1; });
       review = graduated && !!(raw && raw.reviewMode);
     } catch (error) {}
+    var bonusOpen = passed.indexOf(4) !== -1 || lesson20Done;
     root.classList.add("week-open-1");
     if (review) {
-      root.classList.add("week-open-2", "week-open-3", "week-open-4", "review-mode");
+      root.classList.add("week-open-2", "week-open-3", "week-open-4", "week-open-5", "review-mode");
     } else {
       if (passed.indexOf(1) !== -1) root.classList.add("week-open-2");
       if (passed.indexOf(2) !== -1) root.classList.add("week-open-3");
       if (passed.indexOf(3) !== -1) root.classList.add("week-open-4");
+      if (bonusOpen) root.classList.add("week-open-5");
     }
     if (graduated) root.classList.add("is-graduated");
   })();
