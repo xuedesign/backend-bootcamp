@@ -2,9 +2,11 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   emptyProgress,
+  isBonusUnlocked,
   isPassingScore,
   isWeekUnlocked,
   normalizeProgress,
+  withLessonCompletion,
   withQuizResult,
   withReviewMode,
 } from "../src/scripts/progress-core.js";
@@ -55,10 +57,22 @@ test("還沒結業不能硬開複習模式", () => {
 test("壞掉的存檔會被忽略", () => {
   const progress = normalizeProgress({
     passedQuizzes: ["1", 9, "nope"],
-    completedLessons: ["w1-01", "<script>", "w9-99"],
+    completedLessons: ["w1-01", "<script>", "w9-99", "bonus-01"],
     reviewMode: true,
   });
   assert.deepEqual(progress.passedQuizzes, [1]);
-  assert.deepEqual(progress.completedLessons, ["w1-01"]);
+  assert.deepEqual(progress.completedLessons, ["w1-01", "bonus-01"]);
   assert.equal(progress.reviewMode, false);
+});
+
+test("加碼關卡在完成第 20 課或通過第 4 週測驗後解鎖", () => {
+  assert.equal(isBonusUnlocked(emptyProgress()), false);
+  assert.equal(isBonusUnlocked(withLessonCompletion(emptyProgress(), "w4-05", true)), true);
+  assert.equal(isBonusUnlocked(withLessonCompletion(emptyProgress(), "w4-04", true)), false);
+
+  let progress = emptyProgress();
+  for (const week of [1, 2, 3]) progress = withQuizResult(progress, week, 8, 10);
+  assert.equal(isBonusUnlocked(progress), false);
+  progress = withQuizResult(progress, 4, 8, 10);
+  assert.equal(isBonusUnlocked(progress), true);
 });

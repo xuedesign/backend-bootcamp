@@ -2,6 +2,7 @@ import {
   STORAGE_KEY,
   THEME_KEY,
   countCompleted,
+  isBonusUnlocked,
   isWeekUnlocked,
   normalizeProgress,
   withLessonCompletion,
@@ -44,6 +45,7 @@ export function applyProgress(progress) {
   for (let week = 1; week <= 4; week += 1) {
     root.classList.toggle(`week-open-${week}`, isWeekUnlocked(week, progress));
   }
+  root.classList.toggle("week-open-5", isBonusUnlocked(progress));
   root.classList.toggle("is-graduated", progress.graduated);
   root.classList.toggle("review-mode", progress.reviewMode);
 

@@ -25,6 +25,7 @@ const expectedDates = {
   "w4-03": "2026-11-25",
   "w4-04": "2026-11-26",
   "w4-05": "2026-11-27",
+  "bonus-01": "2026-11-30",
 };
 const requiredHeadings = ["動手做", "案例", "常見錯誤", "自我檢查"];
 
@@ -45,7 +46,7 @@ function fail(message) {
 
 const lessonDir = path.join(root, "data", "lessons");
 const lessonFiles = (await readdir(lessonDir)).filter((file) => file.endsWith(".md")).sort();
-if (lessonFiles.length !== 20) fail(`講義應有 20 份，目前 ${lessonFiles.length} 份`);
+if (lessonFiles.length !== 21) fail(`講義應有 21 份，目前 ${lessonFiles.length} 份`);
 
 const seen = new Set();
 for (const file of lessonFiles) {

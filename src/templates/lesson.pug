@@ -3,7 +3,10 @@ extends layout.pug
 block main
   article.lesson(data-week=lesson.week data-lesson=lesson.id)
     header.lesson-hero
-      p.kicker 第 #{lesson.week} 週 · #{week.title}
+      if week.bonus
+        p.kicker 加碼關卡 · #{week.title}
+      else
+        p.kicker 第 #{lesson.week} 週 · #{week.title}
       h1= lesson.title
       p.lesson-meta
         span= lesson.dateLabel
@@ -14,14 +17,20 @@ block main
     div.gate
       h2 這一關還沒打開
       p
-        if lesson.week === 1
+        if week.bonus
+          | 先在第 20 課勾選「我讀完這課了」，或通過第 4 週通關測驗。兩條路有一條成立，這份講義才會出現在畫面上。
+        else if lesson.week === 1
           | 第 1 週應該是開著的。如果看到這段話，請重新整理；進度若壞掉，可以用右上角的「重設進度」。
         else
           | 先通過第 #{lesson.week - 1} 週的通關測驗（答對 80%），這份講義才會出現在畫面上。
       p
-        a.button.button--primary(href="/") 回到關卡地圖
-        if lesson.week > 1
-          a.button(href=`/quizzes/week-${lesson.week - 1}.html`) 前往第 #{lesson.week - 1} 週測驗
+        if week.bonus
+          a.button.button--primary(href="/lessons/w4-05.html") 回到第 20 課
+          a.button(href="/quizzes/week-4.html") 前往第 4 週測驗
+        else
+          a.button.button--primary(href="/") 回到關卡地圖
+          if lesson.week > 1
+            a.button(href=`/quizzes/week-${lesson.week - 1}.html`) 前往第 #{lesson.week - 1} 週測驗
 
     div.stage
       p.pending 正在打開這一關…

@@ -31,6 +31,8 @@ block main
     p.quiz-next(hidden data-quiz-next)
       if nextWeek
         a.button.button--primary(href=`/lessons/w${nextWeek.id}-01.html`) 開始第 #{nextWeek.id} 週
+      else if bonusHref
+        a.button.button--primary(href=bonusHref) 前往加碼關卡
       else
         a.button.button--primary(href="/") 回地圖看結業徽章
       a.button(href="/") 回到關卡地圖

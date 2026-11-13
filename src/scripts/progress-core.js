@@ -4,6 +4,7 @@ export const STORAGE_KEY = "backend-bootcamp-progress-v1";
 export const THEME_KEY = "backend-bootcamp-theme";
 export const PASS_RATIO = 0.8;
 export const TOTAL_WEEKS = 4;
+const LESSON_ID = /^(?:w[1-4]-\d{2}|bonus-\d{2})$/;
 
 export function emptyProgress() {
   return {
@@ -37,7 +38,7 @@ export function normalizeProgress(raw) {
   const passedQuizzes = uniqueWeeks(raw.passedQuizzes);
   const completedLessons = [...new Set(
     (Array.isArray(raw.completedLessons) ? raw.completedLessons : [])
-      .filter((id) => typeof id === "string" && /^w[1-4]-\d{2}$/.test(id)),
+      .filter((id) => typeof id === "string" && LESSON_ID.test(id)),
   )];
 
   const quizScores = {};
@@ -61,6 +62,16 @@ export function normalizeProgress(raw) {
     reviewMode: graduated && raw.reviewMode === true,
     graduated,
   };
+}
+
+/**
+ * 加碼關卡不是第 5 週，也不另外考試。
+ * 完成第 20 課，或通過第 4 週測驗，兩條路有一條成立就打開。
+ * 結業一定包含第 4 週測驗，所以複習模式底下也是開的。
+ */
+export function isBonusUnlocked(progress) {
+  const clean = normalizeProgress(progress);
+  return clean.passedQuizzes.includes(4) || clean.completedLessons.includes("w4-05");
 }
 
 /** 第 1 週一開始就開。之後每一週要先通過前一週的測驗。結業且開啟複習模式時，全部打開。 */

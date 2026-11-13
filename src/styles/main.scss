@@ -308,6 +308,25 @@ h1 {
   gap: 1rem;
 }
 
+.bonus-map {
+  margin: 0 0 2rem;
+}
+
+.bonus-map h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.45rem;
+}
+
+.bonus-map__lede {
+  margin: 0 0 0.9rem;
+  color: var(--muted);
+  max-width: 42rem;
+}
+
+.bonus-map .map {
+  padding-bottom: 0;
+}
+
 .week-card {
   background: var(--bg-elev);
   border: 1px solid var(--line);
@@ -369,7 +388,7 @@ h1 {
 
 .open-copy { display: none; }
 
-@for $week from 1 through 4 {
+@for $week from 1 through 5 {
   html.week-open-#{$week} .week-card[data-week="#{$week}"] {
     .open-copy { display: inline; }
     .lock-copy,
@@ -394,6 +413,10 @@ h1 {
 @media (min-width: 860px) {
   .lesson-path {
     grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .lesson-path.lesson-path--bonus {
+    grid-template-columns: minmax(0, 16rem);
   }
 }
 
@@ -504,7 +527,7 @@ h1 {
   color: var(--muted);
 }
 
-@for $week from 1 through 4 {
+@for $week from 1 through 5 {
   html:not(.week-open-#{$week}) body:has([data-week="#{$week}"]) {
     .gate { display: block; }
     .stage { display: none; }

@@ -2,7 +2,7 @@ extends layout.pug
 
 block main
   section.hero
-    p.eyebrow 2026 / 11 / 02 – 11 / 27 · 平日 20 關
+    p.eyebrow 2026 / 11 / 02 – 11 / 27 · 平日 20 關 · 另有加碼
     h1 先會做網頁，也能學會後端。
     p.lede 這是給前端與設計師的一個月練習。你已經會 HTML、CSS、JavaScript。這裡不假設你寫過伺服器、資料庫或 SQL。每天 30 到 60 分鐘，最後做出一個可以佈署的留言板。
     div.hero__actions
@@ -37,3 +37,28 @@ block main
         a.quiz-link(href=`/quizzes/week-${week.id}.html`)
           span= week.quizTitle
           span.quiz-link__rule 答對 80% 通過
+
+  if bonusWeeks && bonusWeeks.length
+    section.bonus-map(aria-labelledby="bonus-heading")
+      h2#bonus-heading 加碼關卡
+      p.bonus-map__lede 主線四週之後的加課。完成第 20 課，或通過第 4 週測驗後解鎖。
+      ol.map
+        each week in bonusWeeks
+          li.week-card(data-week=week.id)
+            div.week-card__head
+              p.week-card__index(aria-hidden="true") 加
+              div
+                h2= `加碼　${week.title}`
+                p= week.blurb
+              p.week-card__lock(data-lock-label)
+                span.lock-icon(aria-hidden="true")
+                span.lock-copy 完成第 20 課，或通過第 4 週測驗後解鎖
+                span.open-copy 已解鎖
+            ol.lesson-path.lesson-path--bonus
+              each lesson in week.lessons
+                li
+                  a.lesson-node(href=`/lessons/${lesson.id}.html` data-lesson-link=lesson.id)
+                    span.lesson-node__date= lesson.dateLabel
+                    span.lesson-node__title= lesson.title
+                    span.lesson-node__meta= `${lesson.minutes} 分鐘`
+                    span.lesson-node__done(aria-hidden="true") 完成
