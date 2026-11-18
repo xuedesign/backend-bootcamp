@@ -301,9 +301,22 @@ export async function renderSite() {
     href: `/lessons/${lesson.id}.html`,
   }));
 
+  const chapters = weekCards.map((week) => ({
+    id: week.id,
+    title: week.title,
+    bonus: Boolean(week.bonus),
+    lessons: week.lessons.map((lesson) => ({
+      id: lesson.id,
+      title: lesson.title,
+    })),
+  }));
+
   const shared = {
     lessonCount: renderedLessons.length,
     curriculumJson: JSON.stringify(curriculum).replaceAll("<", "\\u003c"),
+    chapters,
+    currentLessonId: null,
+    currentQuizWeek: null,
   };
 
   const home = compile("home.pug")({
@@ -324,6 +337,7 @@ export async function renderSite() {
     const html = lessonTemplate({
       ...shared,
       title: `${lesson.title} · 後端闖關`,
+      currentLessonId: lesson.id,
       lesson,
       week,
       prevHref: pager.prevHref,
@@ -342,6 +356,7 @@ export async function renderSite() {
     const html = quizTemplate({
       ...shared,
       title: `${quiz.title} · 後端闖關`,
+      currentQuizWeek: quiz.week,
       quiz,
       week,
       quizJson: JSON.stringify(quiz).replaceAll("<", "\\u003c"),

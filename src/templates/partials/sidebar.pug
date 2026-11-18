@@ -1,0 +1,59 @@
+nav#course-nav.sidebar(popover="auto" aria-label="課程目錄")
+  .sidebar__top
+    a.brand.brand--side(href="/")
+      span.brand__mark(aria-hidden="true")
+      span.brand__text
+        span.brand__name 後端闖關
+        span.brand__sub 一個月的 Worker 與資料庫
+    button.sidebar__close(type="button" popovertarget="course-nav" popovertargetaction="hide") 關閉目錄
+  .side-progress
+    p.side-progress__label
+      span 進度
+      span(data-progress-label) 已完成 0 / #{lessonCount} 課
+      span.badge-graduate(data-graduate-badge hidden) 結業
+    .progress-track(role="progressbar" aria-valuemin="0" aria-valuemax=lessonCount aria-valuenow="0" aria-label="課程完成度" data-progress-bar)
+      span.progress-track__fill(data-progress-fill)
+  ol.chapters
+    each week in chapters
+      - const active = (currentLessonId && week.lessons.some((item) => item.id === currentLessonId)) || currentQuizWeek === week.id
+      - const startOpen = active || (!currentLessonId && !currentQuizWeek && week.id === 1)
+      - const indexLabel = week.bonus ? "加" : String(week.id).padStart(2, "0")
+      li
+        details.chapter(data-week=week.id open=startOpen)
+          summary.chapter__summary
+            span.chapter__index= indexLabel
+            span.chapter__name
+              span.chapter__kicker
+                if week.bonus
+                  | 加碼
+                else
+                  | 第 #{week.id} 週
+              span.chapter__title= week.title
+            span.chapter__state 未解鎖
+            span.chapter__count(data-chapter-count=week.id) 0/#{week.lessons.length}
+          ol.chapter__lessons
+            each lesson, index in week.lessons
+              - const lessonAttrs = lesson.id === currentLessonId ? { "aria-current": "page" } : {}
+              li
+                a.nav-lesson(href=`/lessons/${lesson.id}.html` data-lesson-link=lesson.id)&attributes(lessonAttrs)
+                  span.nav-lesson__num= index + 1
+                  span.nav-lesson__title= lesson.title
+                  span.nav-lesson__lock 未解鎖
+                  span.nav-lesson__done 完成
+            if !week.bonus
+              - const quizAttrs = currentQuizWeek === week.id ? { "aria-current": "page" } : {}
+              li
+                a.nav-quiz(href=`/quizzes/week-${week.id}.html` data-quiz-link=week.id)&attributes(quizAttrs)
+                  span.nav-quiz__title 通關測驗
+                  span.nav-lesson__lock 未解鎖
+                  span.nav-quiz__passed 已通過
+  p.sidebar__note 進度只存在這台瀏覽器。
+script.
+  (function () {
+    var nav = document.getElementById("course-nav");
+    if (!nav) return;
+    if (window.matchMedia("(min-width: 960px)").matches) {
+      nav.removeAttribute("popover");
+      document.documentElement.classList.add("nav-docked");
+    }
+  })();

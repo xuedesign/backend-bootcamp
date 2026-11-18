@@ -40,19 +40,25 @@ block main
         label.complete
           input(type="checkbox" data-complete=lesson.id)
           span 我讀完這課了
-        section.goals(aria-labelledby="goals-title")
-          h2#goals-title 學習目標
-          ul
-            each goal in lesson.goals
-              li= goal
         .handout-layout
+          aside.rail
+            .stepbar
+              p.stepbar__label 本課步驟
+              p.stepbar__count(data-step-status) 第 1 步，共 #{lesson.toc.length} 步
+            nav.toc(aria-label="本課大綱")
+              p.toc__title 本課大綱
+              ol
+                each item, index in lesson.toc
+                  li
+                    a(href=`#${item.id}`)
+                      span.toc__num= index + 1
+                      span= item.text
+            section.goals(aria-labelledby="goals-title")
+              h2#goals-title 學習目標
+              ul
+                each goal in lesson.goals
+                  li= goal
           .prose!= lesson.handoutHtml
-          nav.toc(aria-label="本課大綱")
-            p.toc__title 本課大綱
-            ol
-              each item in lesson.toc
-                li
-                  a(href=`#${item.id}`)= item.text
         label.complete
           input(type="checkbox" data-complete=lesson.id)
           span 我讀完這課了

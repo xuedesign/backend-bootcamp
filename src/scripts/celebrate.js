@@ -9,7 +9,7 @@ function launchConfetti() {
   canvas.setAttribute("aria-hidden", "true");
   document.body.append(canvas);
   const context = canvas.getContext("2d");
-  const colors = ["#0f6e6b", "#c4552a", "#e3b341", "#f4efe6", "#1d7a46"];
+  const colors = ["#2f6b3a", "#c45c32", "#e7a15a", "#cfe3b2", "#5a43a6"];
   const pieces = Array.from({ length: 90 }, () => ({
     x: Math.random(),
     y: Math.random() * -0.4,
