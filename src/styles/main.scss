@@ -203,6 +203,7 @@ main {
 }
 
 html.nav-docked .sidebar {
+  display: flex;
   position: sticky;
   top: 0;
   height: 100dvh;
@@ -210,8 +211,14 @@ html.nav-docked .sidebar {
   border-inline-end: 1px solid var(--line);
 }
 
+html:not(.nav-docked) .sidebar:not(:popover-open):not(.is-open) {
+  display: none;
+}
+
 html:not(.nav-docked) .sidebar:popover-open,
+html:not(.nav-docked) .sidebar.is-open,
 html.nav-fallback.nav-open .sidebar {
+  display: flex;
   position: fixed;
   inset: 0 auto 0 0;
   width: min(20.5rem, calc(100dvw - 2.5rem));
@@ -248,9 +255,9 @@ html.nav-fallback.nav-open::before {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  html:not(.nav-docked) .sidebar {
-    transition: opacity 160ms ease, translate 160ms ease, display 160ms, overlay 160ms;
-    transition-behavior: allow-discrete;
+  html:not(.nav-docked) .sidebar:popover-open,
+  html:not(.nav-docked) .sidebar.is-open {
+    transition: opacity 160ms ease, translate 160ms ease;
   }
 
   html:not(.nav-docked) .sidebar:popover-open {
@@ -279,10 +286,12 @@ html.nav-fallback.nav-open::before {
   background: var(--bg-elev);
   color: var(--ink);
   border-radius: 10px;
-  padding: 0.35rem 0.55rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.75rem;
   cursor: pointer;
   font-family: var(--mono);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
+  touch-action: manipulation;
 }
 
 html.nav-docked .sidebar__close {
@@ -561,10 +570,12 @@ html.nav-docked .sidebar__close {
   background: var(--bg-elev);
   color: var(--ink);
   border-radius: 10px;
-  padding: 0.4rem 0.65rem;
+  min-height: 2.75rem;
+  padding: 0.45rem 0.7rem;
   cursor: pointer;
   font-family: var(--mono);
   font-size: 0.75rem;
+  touch-action: manipulation;
 }
 
 .nav-toggle__bars {
