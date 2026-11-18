@@ -4,17 +4,25 @@ html(lang="zh-Hant" class="week-open-1")
     meta(charset="utf-8")
     meta(name="viewport" content="width=device-width, initial-scale=1")
     meta(name="description" content="給前端與設計師的一個月後端闖關：HTTP、Cloudflare Workers、D1，最後做出可佈署的留言板。")
-    meta(name="theme-color" content="#0f6e6b")
+    meta(name="theme-color" content="#f4ebe0" media="(prefers-color-scheme: light)")
+    meta(name="theme-color" content="#1c1916" media="(prefers-color-scheme: dark)")
     title= title
     link(rel="icon" href="/favicon.svg" type="image/svg+xml")
+    link(rel="preconnect" href="https://fonts.googleapis.com")
+    link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap")
     link(rel="stylesheet" href="/src/styles/main.scss")
     include partials/boot.pug
   body(data-lesson-count=lessonCount)
     a.skip(href="#main") 跳到內容
-    include partials/header.pug
-    main#main
-      block main
-    include partials/footer.pug
+    .app
+      include partials/sidebar.pug
+      .workspace
+        include partials/header.pug
+        main#main
+          block main
+        include partials/footer.pug
+    include partials/paint.pug
     script(type="application/json" id="curriculum")!= curriculumJson
     script(type="module" src="/src/scripts/main.js")
     noscript

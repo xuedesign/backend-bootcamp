@@ -1,6 +1,7 @@
 import { initCodeCopy } from "./codeblock.js";
 import { showCelebration } from "./celebrate.js";
 import { initLessonPage, initQuizPage } from "./lesson-page.js";
+import { initCourseNav } from "./nav.js";
 import {
   initProgressControls,
   initTheme,
@@ -13,6 +14,7 @@ import {
 initLessonPage();
 initQuizPage(handleQuizResult);
 initProgressControls();
+initCourseNav();
 initTheme();
 initCodeCopy();
 

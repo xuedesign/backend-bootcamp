@@ -1,0 +1,62 @@
+script.
+  (function () {
+    var completed = [];
+    var passed = [];
+    try {
+      var raw = JSON.parse(localStorage.getItem("backend-bootcamp-progress-v1") || "null");
+      if (raw && Array.isArray(raw.completedLessons)) completed = raw.completedLessons;
+      if (raw && Array.isArray(raw.passedQuizzes)) {
+        passed = raw.passedQuizzes.map(Number).filter(function (week) {
+          return week >= 1 && week <= 4;
+        });
+      }
+    } catch (error) {}
+
+    var seen = Object.create(null);
+    var total = 0;
+    var count = 0;
+    document.querySelectorAll("[data-lesson-link]").forEach(function (link) {
+      var id = link.getAttribute("data-lesson-link");
+      var done = completed.indexOf(id) !== -1;
+      if (done) link.classList.add("is-done");
+      if (seen[id]) return;
+      seen[id] = true;
+      total += 1;
+      if (done) count += 1;
+    });
+    document.querySelectorAll("[data-chapter-count]").forEach(function (node) {
+      var chapter = node.closest("[data-week]");
+      if (!chapter) return;
+      var links = chapter.querySelectorAll("[data-lesson-link]");
+      var done = 0;
+      links.forEach(function (link) {
+        if (completed.indexOf(link.getAttribute("data-lesson-link")) !== -1) done += 1;
+      });
+      node.textContent = done + "/" + links.length;
+    });
+    document.querySelectorAll("[data-quiz-link]").forEach(function (link) {
+      if (passed.indexOf(Number(link.getAttribute("data-quiz-link"))) !== -1) {
+        link.classList.add("is-passed");
+      }
+    });
+    if (!total) total = Number(document.body.getAttribute("data-lesson-count") || 0);
+    var label = "已完成 " + count + " / " + total + " 課";
+    document.querySelectorAll("[data-progress-label]").forEach(function (node) {
+      node.textContent = label;
+    });
+    document.querySelectorAll("[data-progress-fill]").forEach(function (fill) {
+      var ratio = total === 0 ? 0 : count / total;
+      fill.style.width = Math.round(ratio * 100) + "%";
+    });
+    document.querySelectorAll("[data-progress-bar]").forEach(function (bar) {
+      bar.setAttribute("aria-valuemax", String(total));
+      bar.setAttribute("aria-valuenow", String(count));
+      bar.setAttribute("aria-valuetext", label);
+    });
+    var graduated = [1, 2, 3, 4].every(function (week) { return passed.indexOf(week) !== -1; });
+    if (graduated) {
+      document.querySelectorAll("[data-graduate-badge]").forEach(function (badge) {
+        badge.hidden = false;
+      });
+    }
+  })();

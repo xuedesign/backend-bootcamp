@@ -34,9 +34,11 @@ block main
                 span.lesson-node__title= lesson.title
                 span.lesson-node__meta= `${lesson.minutes} 分鐘`
                 span.lesson-node__done(aria-hidden="true") 完成
-        a.quiz-link(href=`/quizzes/week-${week.id}.html`)
+        a.quiz-link(href=`/quizzes/week-${week.id}.html` data-quiz-link=week.id)
           span= week.quizTitle
-          span.quiz-link__rule 答對 80% 通過
+          span.quiz-link__state
+            span.quiz-link__rule 答對 80% 通過
+            span.quiz-link__passed 已通過
 
   if bonusWeeks && bonusWeeks.length
     section.bonus-map(aria-labelledby="bonus-heading")

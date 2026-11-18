@@ -73,6 +73,18 @@ export function applyProgress(progress) {
     link.classList.toggle("is-done", progress.completedLessons.includes(link.dataset.lessonLink));
   });
 
+  document.querySelectorAll("[data-chapter-count]").forEach((node) => {
+    const chapter = node.closest("[data-week]");
+    if (!chapter) return;
+    const links = [...chapter.querySelectorAll("[data-lesson-link]")];
+    const done = links.filter((link) => progress.completedLessons.includes(link.dataset.lessonLink)).length;
+    node.textContent = `${done}/${links.length}`;
+  });
+
+  document.querySelectorAll("[data-quiz-link]").forEach((link) => {
+    link.classList.toggle("is-passed", progress.passedQuizzes.includes(Number(link.dataset.quizLink)));
+  });
+
   document.querySelectorAll("[data-complete]").forEach((input) => {
     input.checked = progress.completedLessons.includes(input.dataset.complete);
   });

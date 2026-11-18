@@ -10,6 +10,38 @@ export function initLessonPage() {
   if (!open) return;
 
   stage.replaceChildren(template.content.cloneNode(true));
+  initStepTracker(stage);
+}
+
+/** 依捲動位置標出目前的小節，並更新「第 n 步，共 N 步」。 */
+function initStepTracker(root) {
+  const headings = [...root.querySelectorAll(".prose h2")];
+  const status = root.querySelector("[data-step-status]");
+  const links = [...root.querySelectorAll(".toc a")];
+  if (!headings.length || !status) return;
+
+  const mark = () => {
+    const line = window.scrollY + 140;
+    let index = 0;
+    headings.forEach((heading, headingIndex) => {
+      const top = heading.getBoundingClientRect().top + window.scrollY;
+      if (top <= line) index = headingIndex;
+    });
+    status.textContent = `第 ${index + 1} 步，共 ${headings.length} 步`;
+    headings.forEach((heading, headingIndex) => {
+      heading.classList.toggle("is-current-step", headingIndex === index);
+    });
+    links.forEach((link, linkIndex) => {
+      const current = linkIndex === index;
+      link.classList.toggle("is-current", current);
+      if (current) link.setAttribute("aria-current", "true");
+      else link.removeAttribute("aria-current");
+    });
+  };
+
+  mark();
+  document.addEventListener("scroll", mark, { passive: true });
+  window.addEventListener("resize", mark);
 }
 
 export function initQuizPage(onPass) {
